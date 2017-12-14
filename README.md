@@ -11,6 +11,8 @@ Model using PRISM tool a file stored persistently by sharding it between 4 data 
   
 Hint-- the file is not replicated and only one copy exists.
 
+Hint-- the file is durable if maximum one data center fails --> (failedDC<=1)
+
 **B. Model inputs:**
 
 Datacenter: 
@@ -74,7 +76,7 @@ VI. Submission Instructions:
 **B. Assignment submission:**
 - If you had registered for the assignments, you should have received a bitbucket notification giving you access to your own repository (e.g., https://bitbucket.org/se1ws1718/a1p01) 
     * Note that this 'git' repository
-    * Use the empty files provided in the repository to include you solution--> do not change names of files.
+    * Use the empty files provided in the repository to include you solution--> do not change the names of files.
 
 - **Deadline**: 20.12.2017--no submission will be accepted after that.
 
