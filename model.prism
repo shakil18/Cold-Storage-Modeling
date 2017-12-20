@@ -1,9 +1,46 @@
 ctmc
 
-//write the constant and variables
+const double dcFR = 0.0001;		// DC Failure rate
+const double diskFR = 0.05;		// Disks Failure rate
+
+// Annual repair rate rr = 1w (52.142857143) OR 1d (365)
+
+// Repair rates (DC,Disks) : 1d1d
+
+const double dcRR;		// DC Repair rate
+const double diskRR;		// Disks Repair rate
+
 
 module SE1A1
-	//write the model here
+
+	ss:[0..2] init 2;  	// DC 3/4
+	ss1:[0..4] init 4; 	// Disks 17/20
+
+	[fail1] (ss = 2 & ss1 = 4) -> 20*diskFR:(ss1'= ss1-1) + 4*dcFR:(ss'= ss-1);
+
+	[fail2] (ss = 2 & ss1 = 3) -> 19*diskFR:(ss1'= ss1-1) + 4*dcFR:(ss'= ss-1);
+	[fail3] (ss = 2 & ss1 = 2) -> 18*diskFR:(ss1'= ss1-1) + 4*dcFR:(ss'= ss-1);
+	[fail4] (ss = 2 & ss1 = 1) -> 17*diskFR:(ss1'= ss1-1) + 4*dcFR:(ss'= ss-1);
+
+	[fail5] (ss = 1 & ss1 = 4) -> 20*diskFR:(ss1'= ss1-1) + 3*dcFR: (ss'= ss-1);
+
+	[fail6] (ss = 1 & ss1 = 3) -> 19*diskFR:(ss1'= ss1-1) + 3*dcFR: (ss'= ss-1);
+	[fail7] (ss = 1 & ss1 = 2) -> 18*diskFR:(ss1'= ss1-1) + 3*dcFR: (ss'= ss-1);
+	[fail8] (ss = 1 & ss1 = 1) -> 17*diskFR:(ss1'= ss1-1) + 3*dcFR: (ss'= ss-1);
+
+
+	[repair1] (ss = 2 & ss1 = 3) -> 1*diskRR : (ss1'= ss1+1);
+	[repair2] (ss = 2 & ss1 = 2) -> 2*diskRR : (ss1'= ss1+1);
+	[repair3] (ss = 2 & ss1 = 1) -> 3*diskRR : (ss1'= ss1+1);
+
+	[repair4] (ss = 1 & ss1 = 4) -> 1*dcRR : (ss'= ss+1);
+
+	[repair5] (ss = 1 & ss1 = 3) -> 1*diskRR : (ss1'= ss1+1) + 1*dcRR : (ss'= ss+1);
+	[repair6] (ss = 1 & ss1 = 2) -> 2*diskRR : (ss1'= ss1+1) + 1*dcRR : (ss'= ss+1);
+	[repair7] (ss = 1 & ss1 = 1) -> 3*diskRR : (ss1'= ss1+1) + 1*dcRR : (ss'= ss+1);
+
+	[fail9] (ss = 2 & ss1 > 0) -> dcFR : (ss1'= 0);
+	[fail10] (ss = 1 & ss1 > 0) -> dcFR : (ss1'= 0);
+	
 
 endmodule
-
